@@ -20,3 +20,6 @@ make-migration:
 
 migrate:
 	cd backend && source venv/bin/activate && python3 api/manage.py migrate
+
+create-app:
+	cd backend && source venv/bin/activate && python3 api/manage.py startapp focusflow
