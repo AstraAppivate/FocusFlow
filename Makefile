@@ -10,7 +10,8 @@ run-backend:
 run-frontend:
 	cd frontend && npm run dev
 
-install: install-frontend install-backend
+install: 
+	install-frontend install-backend
 
 superuser:
 	cd backend && source venv/bin/activate && python3 api/manage.py createsuperuser
@@ -23,3 +24,12 @@ migrate:
 
 create-app:
 	cd backend && source venv/bin/activate && python3 api/manage.py startapp focusflow
+
+test-all: 
+	cd backend && source venv/bin/activate && python3 api/manage.py test
+
+showmigrations-app: 
+	cd backend && source venv/bin/activate && python3 api/manage.py showmigrations focusflow
+
+check:
+	cd backend && source venv/bin/activate && python3 api/manage.py check
