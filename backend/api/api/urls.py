@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.http import HttpResponse
+from django.http import JsonResponse
+from focusflow.models import Project
+
+def projectsView (request):
+    projects = Project.objects.all()
+    print(projects)
+    data = {"message": "Projects"}
+    return JsonResponse(data)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('projects/', projectsView),
 ]
