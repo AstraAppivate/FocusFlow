@@ -33,3 +33,6 @@ showmigrations-app:
 
 check:
 	cd backend && source venv/bin/activate && python3 api/manage.py check
+
+flush:
+	cd backend && source venv/bin/activate && python3 api/manage.py flush
