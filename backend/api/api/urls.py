@@ -19,14 +19,28 @@ from django.urls import path
 from django.http import HttpResponse
 from django.http import JsonResponse
 from focusflow.models import Project
+from focusflow.models import Task
 
 def projectsView (request):
     projects = Project.objects.all()
     print(projects)
-    data = {"message": "Projects"}
-    return JsonResponse(data)
+    data = []
+    for project in projects:
+        data.append(project.to_dict())
+    return JsonResponse({"Projects": data})
+
+def tasksView (request):
+    tasks = Task.objects.all()
+    print(tasks)
+    data = []
+    for task in tasks:
+        data.append(task.to_dict())
+    return JsonResponse({"Tasks": data})
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('projects/', projectsView),
+    path('tasks/', tasksView)
+
+
 ]
