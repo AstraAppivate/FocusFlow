@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from datetime import date
+from django.contrib.auth.models import User
 
 
 class Project(models.Model):
@@ -49,6 +50,33 @@ class Task(models.Model):
             "status": self.status,
             "project": self.project.title
         }
+    
+class UserTask(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name="tasks")
+    task = models.ForeignKey(Task,on_delete=models.CASCADE, related_name="users")
+    class PriorityTypes(models.TextChoices):
+        P1 = "P1"
+        P2 = "P2"
+        P3 = "P3"
+    priority = models.CharField(max_length=20,choices=PriorityTypes.choices, default=PriorityTypes.P3)
+    assigned = models.DateField(default=date.today)
+
+    def __str__(self):
+        return f"{self.task} Assigned to {self.user}"
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user": self.user,
+            "task": self.task,
+            "priority": self.priority,
+            "assigned": self.assigned
+        }
+
+
+
+
     
 # class UserTask(models.Model):
 #     Task = models.ForeignKey(Task,on_delete=models.CASCADE)
