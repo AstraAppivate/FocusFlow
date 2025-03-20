@@ -68,8 +68,9 @@ class UserTask(models.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "user": self.user,
-            "task": self.task,
+            "user_id": self.user.id,
+            "user_name": f"{self.user}{self.user.first_name}",
+            "task": self.task.to_dict(),
             "priority": self.priority,
             "assigned": self.assigned
         }
