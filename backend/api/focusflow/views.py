@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from focusflow.models import Project
 from focusflow.models import Task
 from focusflow.models import UserTask
+from focusflow.models import UserProject
 
 # Create your views here.
 def projectsView (request):
@@ -21,11 +22,19 @@ def tasksView (request):
         data.append(task.to_dict())
     return JsonResponse({"Tasks": data})
 
-def usertaskView (request):
+def usertasksView (request):
     usertasks = UserTask.objects.all()
     print(usertasks)
     data = []
     for usertask in usertasks:
         data.append(usertask.to_dict())
     return JsonResponse({"UserTask": data})
+
+def userprojectsView (request):
+    userprojects = UserProject.objects.all()
+    print(userprojects)
+    data = []
+    for userproject in userprojects:
+        data.append(userproject.to_dict())
+    return JsonResponse({"UserProject": data})
     

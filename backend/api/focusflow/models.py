@@ -74,6 +74,30 @@ class UserTask(models.Model):
             "priority": self.priority,
             "assigned": self.assigned
         }
+    
+class UserProject(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name="projects")
+    project = models.ForeignKey(Project,on_delete=models.CASCADE, related_name="users")
+    class ProjectPermissionTypes(models.TextChoices):
+        ADMIN = "Admin"
+        MAINTAIN = "Maintain"
+        VIEW = "View"
+    role = models.CharField(max_length=20,choices=ProjectPermissionTypes.choices, default=ProjectPermissionTypes.VIEW)
+    assigned = models.DateField(default=date.today)
+
+    def __str__(self):
+        return f"{self.project} Assigned to {self.user}"
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user.id,
+            "user_name": f"{self.user}{self.user.first_name}",
+            "project": self.project.to_dict(),
+            "role": self.role,
+            "assigned": self.assigned
+        }
 
 
 

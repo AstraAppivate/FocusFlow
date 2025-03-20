@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse
-from focusflow.views import projectsView, tasksView, usertaskView
+from focusflow.views import projectsView, tasksView, usertasksView, userprojectsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('projects/', projectsView),
     path('tasks/', tasksView),
-    path('assignments', usertaskView)
+    path('assignments', usertasksView),
+    path('roles', userprojectsView)
 ]
